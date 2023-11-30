@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CoreandFood.Data.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 
 namespace CoreandFood.Controllers
 {
@@ -9,10 +10,10 @@ namespace CoreandFood.Controllers
     {
         FoodRepository foodRepository = new FoodRepository();
         Context c=new Context();
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
             
-            return View(foodRepository.Tlist("Category"));
+            return View(foodRepository.Tlist("Category").ToPagedList(page,3));
         }
         [HttpGet]
         public IActionResult AddFood()
@@ -36,6 +37,41 @@ namespace CoreandFood.Controllers
         public IActionResult DeleteFood(int id)
         {
             foodRepository.TDelete(new Food { FoodID=id});
+            return RedirectToAction("Index");
+        }
+        public IActionResult FoodGet(int id)
+        {
+            var x=foodRepository.TGet(id);
+            List<SelectListItem> values = (from y in c.Categories.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = y.CategoryName,
+                                               Value = y.CategoryID.ToString()
+
+                                           }).ToList();
+            ViewBag.v1 = values;
+            Food f=new Food()
+            {
+                FoodID=x.FoodID,
+                Name=x.Name,
+                Price=x.Price,
+                Stock=x.Stock,
+                ImageURL=x.ImageURL,
+                Description=x.Description,
+                
+            };
+            return View(f);
+        }
+        public IActionResult FoodUpdate(Food p)
+        {
+            var x=foodRepository.TGet(p.FoodID);
+            x.Name = p.Name;
+            x.Price = p.Price;
+            x.Stock = p.Stock;
+            x.ImageURL = p.ImageURL;
+            x.Description = p.Description;
+            x.CategoryID = p.CategoryID;
+            foodRepository.TUpdate(x);
             return RedirectToAction("Index");
         }
     }

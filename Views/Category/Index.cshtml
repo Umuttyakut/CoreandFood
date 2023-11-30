@@ -10,9 +10,10 @@
     <tr>
         <th>ID</th>
         <th>Category Name</th>
+        <th>Status</th>
         <th>Delete</th>
         <th>Update</th>
-        <th>Status</th>
+        
     </tr>
     @foreach (var x in Model)
     {
@@ -20,8 +21,8 @@
             <td>@x.CategoryID</td>
             <td>@x.CategoryName</td>
             <td>@x.Status</td>
-            <td><a href="#" class="btn btn-danger">Delete</a></td>
-            <td><a href="/Category/CategoryGet/,@x.CategoryID" class="btn btn-success">Update</a></td>
+            <td><a href="/Category/CategoryDelete/@x.CategoryID" class="btn btn-danger">Delete</a></td>
+            <td><a href="/Category/CategoryGet/@x.CategoryID" class="btn btn-success">Update</a></td>
         </tr>
     }
 </table>
