@@ -12,5 +12,7 @@ namespace CoreandFood.Data.Models
         }
         public DbSet<Food> Foods { get; set; }//modelin içindekiler tablo formatında sıralanır
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Admin> Admins { get; set; }
     }
 }
