@@ -29,9 +29,24 @@ namespace CoreandFood.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AddFood(Food p) 
+        public IActionResult AddFood(urunekle p) 
         {
-            foodRepository.TAdd(p);
+            Food f=new Food();
+            if (p.ImageURL!=null)
+            {
+                var extension = Path.GetExtension(p.ImageURL.FileName);
+                var newimagename=Guid.NewGuid() + extension;
+                var location=Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/resimler/",newimagename);
+                var stream=new FileStream(location,FileMode.Create);
+                p.ImageURL.CopyTo(stream);
+                f.ImageURL = newimagename;
+            }
+            f.Name = p.Name;
+            f.Price = p.Price;
+            f.Stock = p.Stock;
+            f.CategoryID = p.CategoryID;
+            f.Description=p.Description;
+            foodRepository.TAdd(f);
             return RedirectToAction("Index");
         }
         public IActionResult DeleteFood(int id)

@@ -3,7 +3,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using (Html.BeginForm())
+{
+    <p>
+        Food Name:@Html.TextBox("p");
+        <input type="submit" value="Find"/>
+    </p>
+}
 <h1>Category List</h1>
 <br />
 <table class="table table-bordered">

@@ -1,4 +1,4 @@
-﻿@model CoreandFood.Data.Models.Food
+﻿@model CoreandFood.Data.Models.urunekle
 @{
     ViewData["Title"] = "AddFood";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,11 +6,7 @@
 
 <h2>Food Update</h2>
 <br />
-@using (Html.BeginForm("AddFood", "Food", FormMethod.Post))
-{
-    <b>Food ID</b>
-    @Html.TextBoxFor(x=>x.FoodID, new{@class="form-control"})
-    <br />
+<form class="form-group" action="AddFood" asp-controller="Food" method="post" enctype="multipart/form-data">
     <b>Category Name</b>
     @Html.TextBoxFor(x=>x.Name, new{@class="form-control"})
     @Html.ValidationMessageFor(x=>x.Name,"",new{@style="color:red"})
@@ -22,7 +18,7 @@
     @Html.TextBoxFor(x=>x.Stock, new{@class="form-control"})
     <br />
     <b>ImageURL</b>
-    @Html.TextBoxFor(x=>x.ImageURL, new{@class="form-control"})
+    <input type="file" name="ImageURL"/>
     <br />
     <b>Category</b>
     @Html.DropDownListFor(x=>x.CategoryID,(List<SelectListItem>)ViewBag.v1,new {@class="form-control"})
@@ -31,5 +27,5 @@
     @Html.TextBoxFor(x=>x.Description, new{@class="form-control"})
     <br />
     <button class="btn btn-primary">Update</button>
-}
+</form>
 

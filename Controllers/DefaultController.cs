@@ -10,8 +10,9 @@ namespace CoreandFood.Controllers
 		{
 			return View();
 		}
-		public IActionResult CategoryDetails()
+		public IActionResult CategoryDetails(int id)
 		{
+			ViewBag.x=id;
 			return View();
 		}
 	}
